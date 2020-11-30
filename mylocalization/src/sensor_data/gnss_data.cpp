@@ -24,6 +24,28 @@ namespace mylocalization
     }
     bool GNSSData::SyncData(std::deque<GNSSData>& UnsyncedData, std::deque<GNSSData>& SyncedData,double sync_time)
     {
+        while (UnsyncedData.size() >= 2 )
+        {
+            if(UnsyncedData.front().time > sync_time)
+                return false;
+            if(UnsyncedData.at(1).time < sync_time)
+            {
+                UnsyncedData.pop_front();
+                continue;
+            }
+            if(sync_time - UnsyncedData.front().time > 0.2)
+                return false;
+            if(UnsyncedData.at(1).time - sync_time > 0.2)
+                return false;
+        }
+
+        GNSSData front_data = UnsyncedData.front();
+        GNSSData back_time = UnsyncedData.at(1);
+        GNSSData sync_data;
+        
+
+
+        
         
 
     }
