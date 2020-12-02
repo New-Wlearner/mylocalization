@@ -12,14 +12,13 @@
                 "/home/dongxiao/catkin_ws/src/mylocalization/include/**",
                 "/usr/include/**",
                 "${workspaceFolder}/include",
-                "${workspaceFolder}/include",
                 "/usr/include/pcl-1.8"
             ],
-            "name": "ROS",
-            "intelliSenseMode": "clang-x64",
-            "compilerPath": "/usr/bin/gcc",
-            "cStandard": "gnu11",
-            "cppStandard": "gnu++14",
+            "name": "Linux",
+            "intelliSenseMode": "gcc-x64",
+            "compilerPath": "/usr/bin/clang",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],

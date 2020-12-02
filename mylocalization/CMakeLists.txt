@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(mylocalization)
 set (CMAKE_BUILD_TYPE "Release")
+SET(CMAKE_CXX_FLAGS_RELEASE "$ENV{CXXFLAGS} -O3 -Wall")
 add_compile_options(-std=c++11)
 add_definitions(-std=c++11)
 
@@ -23,6 +24,9 @@ find_package(catkin REQUIRED COMPONENTS
 )
 include(cmake/geographic.cmake)
 include(cmake/glog.cmake )
+
+include_directories(include ${catkin_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -215,3 +219,4 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+add_executable(test1 src/subscriber/cloud_subscriber.cpp src/subscriber/gnss_subscriber.cpp)

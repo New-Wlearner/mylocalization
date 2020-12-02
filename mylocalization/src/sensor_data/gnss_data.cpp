@@ -40,8 +40,19 @@ namespace mylocalization
         }
 
         GNSSData front_data = UnsyncedData.front();
-        GNSSData back_time = UnsyncedData.at(1);
+        GNSSData back_data = UnsyncedData.at(1);
         GNSSData sync_data;
+        double k = (back_data.time - front_data.time)/(sync_time - front_data.time);
+        sync_data.time = sync_time;
+        sync_data.latitude =  (1-k) * front_data.latitude + k  * back_data.latitude;
+        sync_data.longtitude =  (1-k) * front_data.longtitude + k  * back_data.longtitude;
+        sync_data.altitude =  (1-k) * front_data.altitude + k  * back_data.altitude;
+        sync_data.local_N = (1-k) * front_data.local_N + k*back_data.local_N;
+        sync_data.local_E = (1-k) * front_data.local_E + k*back_data.local_E;
+        sync_data.local_U = (1-k) * front_data.local_U + k*back_data.local_U; 
+        sync_data.status = back_data.status;
+        SyncedData.push_back(sync_data);
+        return true;
         
 
 
