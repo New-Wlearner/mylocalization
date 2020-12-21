@@ -7,18 +7,14 @@
             },
             "includePath": [
                 "/opt/ros/melodic/include/**",
-                "/home/dongxiao/catkin_ws/devel/include/**",
-                "/home/dongxiao/catkin_ws/src/mylocalization/third_party/GeographicLib/include/",
                 "/home/dongxiao/catkin_ws/src/mylocalization/include/**",
-                "/usr/include/**",
-                "${workspaceFolder}/include",
-                "/usr/include/pcl-1.8"
+                "/usr/include/**"
             ],
-            "name": "Linux",
+            "name": "ROS",
             "intelliSenseMode": "gcc-x64",
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu11",
+            "cppStandard": "gnu++14",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],

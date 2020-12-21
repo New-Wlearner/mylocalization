@@ -3,6 +3,7 @@
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/install.dir
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/list_install_components.dir
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/test.dir
+/home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/test_frame_node.dir
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/tf2_msgs_generate_messages_nodejs.dir
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/tf2_msgs_generate_messages_eus.dir
 /home/dongxiao/catkin_ws/src/mylocalization/build/CMakeFiles/tf2_msgs_generate_messages_cpp.dir

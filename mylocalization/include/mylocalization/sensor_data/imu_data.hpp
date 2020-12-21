@@ -5,7 +5,7 @@
 #include <cmath>
 #include <eigen3/Eigen/Dense>
 
-namespace
+namespace mylocalization
 {
     class IMUData
     {

@@ -16,7 +16,7 @@ namespace mylocalization
             }
             if(sync_time - UnsyncdData.front().time > 0.2)
                 return false;
-            if(UnsyncdData.at(1) - sync_time > 0.2)
+            if(UnsyncdData.at(1).time - sync_time > 0.2)
                 return false;
         }
         if(UnsyncdData.size() < 2)

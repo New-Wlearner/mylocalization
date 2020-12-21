@@ -1,0 +1,8 @@
+prefix=/home/dongxiao/catkin_ws/src/getgps/build/devel
+
+Name: getgps
+Description: Description of getgps
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

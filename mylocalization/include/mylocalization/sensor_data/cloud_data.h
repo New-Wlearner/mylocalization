@@ -22,7 +22,9 @@ class CloudData
 private:
     /* data */
 public:
-    CloudData(/* args */):cloud_ptr(new CLOUD);
+    CloudData():cloud_ptr(new CLOUD){
+
+    };
     using POINT = pcl::PointXYZ;
     using CLOUD = pcl::PointCloud<POINT>;
     using CLOUD_PTR = CLOUD::Ptr;

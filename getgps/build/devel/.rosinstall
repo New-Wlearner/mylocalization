@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/dongxiao/catkin_ws/src/getgps/build/devel/setup.sh

@@ -19,7 +19,7 @@ namespace mylocalization
     private:
         ros::Subscriber subscriber_;
         ros::NodeHandle nh_;
-        std::deque<CloudData> new_cloud_data;
+        std::deque<CloudData> new_cloud_data_;
         void msg_callback(const sensor_msgs::PointCloud2::ConstPtr& cloud_msg_ptr);
     public:
         // 声明带参数的构造函数后用default定义不带参数的构造函数
