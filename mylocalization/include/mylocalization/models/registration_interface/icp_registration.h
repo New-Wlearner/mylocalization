@@ -13,15 +13,15 @@
 #include <boost/thread/thread.hpp>
 #include <pcl/console/parse.h>
 namespace mylocalization{
-    class ICPRegistration{
+    class ICPRegistration : public RegistrationInterface{
     public:
         ICPRegistration(YAML::Node& node);
         ICPRegistration(float eucli_eps, float max_dist, float trans_eps, int max_iter);
-        bool SetInputTarget(CloudData::CLOUD_PTR& input_source);
-        bool ScanMatch(CloudData::CLOUD_PTR& input_source,
-                       Eigen::Matrix4f& predict_pose,
-                       CloudData::CLOUD_PTR& result_cloud_ptr,
-                       Eigen::Matrix4f& result_pose);
+        bool SetInputTarget(const CloudData::CLOUD_PTR& input_source) override;
+        bool ScanMatch(const CloudData::CLOUD_PTR& input_source,
+                       const Eigen::Matrix4f& predict_pose,
+                       const CloudData::CLOUD_PTR& result_cloud_ptr,
+                       Eigen::Matrix4f& result_pose) override;
 //        bool VisualScanMatch(CloudData::CLOUD_PTR& input_source,
 //                             Eigen::Matrix4f& predict_pose,
 //                             CloudData::CLOUD_PTR& result_cloud_ptr,

@@ -21,7 +21,7 @@ namespace mylocalization
       double local_E = 0.0;
       double local_N = 0.0;
       double local_U = 0.0;
-      // 这两个是干啥的
+      // GNSS的状态
       int status = 0;
       int service = 0;  
 

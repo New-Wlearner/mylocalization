@@ -15,12 +15,12 @@ namespace mylocalization{
     NDTRegistration::NDTRegistration(float res, float step_size, float trans_eps, int max_iter) {
         SetRegistrationParam(res,step_size,trans_eps,max_iter);
     }
-    bool NDTRegistration::SetInputTarget(CloudData::CLOUD_PTR &input_source) {
+    bool NDTRegistration::SetInputTarget(const CloudData::CLOUD_PTR &input_source) {
         ndt_ptr_->setInputTarget(input_source);
         return true;
     }
-    bool NDTRegistration::ScanMatch(CloudData::CLOUD_PTR &input_source, Eigen::Matrix4f &predict_pose,
-                                    CloudData::CLOUD_PTR &target_cloud_ptr, Eigen::Matrix4f &result_pose) {
+    bool NDTRegistration::ScanMatch(const CloudData::CLOUD_PTR &input_source, const Eigen::Matrix4f &predict_pose,
+                                    const CloudData::CLOUD_PTR &target_cloud_ptr, Eigen::Matrix4f &result_pose) {
         ndt_ptr_->setInputSource(input_source);
         ndt_ptr_->align(*target_cloud_ptr,predict_pose);
         result_pose = ndt_ptr_->getFinalTransformation();

@@ -2,7 +2,7 @@
 // Created by dongxiao on 2020/12/11.
 //
 #include "mylocalization/models/cloud_filter/voxel_filter.h"
-#include "mylocalization/models/cloud_filter/cloud_filter_interface.h"
+
 #include "glog/logging.h"
 namespace mylocalization{
     VoxelFilter::VoxelFilter(const YAML::Node &node) {

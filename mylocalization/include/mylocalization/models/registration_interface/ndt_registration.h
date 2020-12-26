@@ -7,16 +7,16 @@
 #include "mylocalization/models/registration_interface/registration_interface.h"
 #include <pcl/registration/ndt.h>
 namespace mylocalization{
-class NDTRegistration{
+class NDTRegistration: public RegistrationInterface{
 public:
     NDTRegistration(YAML::Node& node);
     NDTRegistration(float res, float step_size, float trans_eps, int max_iter);
-    bool SetInputTarget(CloudData::CLOUD_PTR& input_source);
+    bool SetInputTarget(const CloudData::CLOUD_PTR& input_source) override;
     bool ScanMatch(
-            CloudData::CLOUD_PTR& input_source,
-            Eigen::Matrix4f& predict_pose,
-            CloudData::CLOUD_PTR& target_cloud_ptr,
-            Eigen::Matrix4f& result_pose);
+            const CloudData::CLOUD_PTR& input_source,
+            const Eigen::Matrix4f& predict_pose,
+            const CloudData::CLOUD_PTR& target_cloud_ptr,
+            Eigen::Matrix4f& result_pose) override;
 
 private:
     bool SetRegistrationParam(float res, float step_size, float trans_eps, int max_iter);

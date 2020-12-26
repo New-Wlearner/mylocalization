@@ -24,14 +24,14 @@ namespace mylocalization{
         icp_ptr_->setMaximumIterations(max_iter);
         return true;
     }
-    bool ICPRegistration::ScanMatch(CloudData::CLOUD_PTR &input_source, Eigen::Matrix4f &predict_pose,
-                                    CloudData::CLOUD_PTR &result_cloud_ptr, Eigen::Matrix4f &result_pose) {
+    bool ICPRegistration::ScanMatch(const CloudData::CLOUD_PTR &input_source, const Eigen::Matrix4f &predict_pose,
+                                    const CloudData::CLOUD_PTR &result_cloud_ptr, Eigen::Matrix4f &result_pose) {
         icp_ptr_->setInputSource(input_source);
         icp_ptr_->align(*result_cloud_ptr,predict_pose);
         result_pose = icp_ptr_->getFinalTransformation();
         return true;
     }
-    bool ICPRegistration::SetInputTarget(CloudData::CLOUD_PTR &input_source) {
+    bool ICPRegistration::SetInputTarget(const CloudData::CLOUD_PTR &input_source) {
         icp_ptr_->setInputTarget(input_source);
         return true;
     }

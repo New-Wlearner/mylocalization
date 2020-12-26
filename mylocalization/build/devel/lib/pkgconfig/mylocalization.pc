@@ -1,8 +1,0 @@
-prefix=/home/dongxiao/catkin_ws/src/mylocalization/build/devel
-
-Name: mylocalization
-Description: Description of mylocalization
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -11,12 +11,13 @@
 namespace mylocalization{
     class RegistrationInterface{
         // can use base to initial son, can delete son when delete base
+    public:
         virtual ~RegistrationInterface() = default;
-        virtual bool SetInputTarget(const CloudData::CLOUD_PTR& input_target);
+        virtual bool SetInputTarget(const CloudData::CLOUD_PTR& input_target) = 0;
         virtual bool ScanMatch(const CloudData::CLOUD_PTR& input_source,
                           const Eigen::Matrix4f& predict_pose,
                           const CloudData::CLOUD_PTR& target_cloud_ptr,
-                          Eigen::Matrix4f& result_pose);
+                          Eigen::Matrix4f& result_pose) = 0;
     };
 }
 #endif //MYLOCALIZATION_REGISTRATION_INTERFACE_H
