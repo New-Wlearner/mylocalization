@@ -5,7 +5,7 @@
 #include "mylocalization/models/registration_interface/ndt_registration.h"
 
 namespace mylocalization{
-    NDTRegistration::NDTRegistration(YAML::Node &node) {
+    NDTRegistration::NDTRegistration(const YAML::Node &node) {
         float res = node["res"].as<float>();
         float step_size = node["step_size"].as<float>();
         float trans_eps = node["trans_eps"].as<float>();

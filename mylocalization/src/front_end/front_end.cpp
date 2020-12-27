@@ -12,9 +12,9 @@
 
 namespace mylocalization{
     FrontEnd::FrontEnd() :
-    local_map_ptr_(new CloudData::CLOUD_PTR()),
-    global_map_ptr_(new CloudData::CLOUD_PTR()),
-    result_map_ptr_(new CloudData::CLOUD_PTR()){
+    local_map_ptr_(new CloudData::CLOUD()),
+    global_map_ptr_(new CloudData::CLOUD()),
+    result_map_ptr_(new CloudData::CLOUD()){
         InitWithConfig();
     }
     bool FrontEnd::InitWithConfig() {
@@ -29,10 +29,10 @@ namespace mylocalization{
 
         return true;
     }
-    bool FrontEnd::InitDataPath(YAML::Node &config_node) {
+    bool FrontEnd::InitDataPath(const YAML::Node &config_node) {
         data_path_ = config_node["data_path"].as<std::string>();
 
-        if(data_path_ = "./")
+        if(data_path_ == "./")
             data_path_ = WORK_SPACE_PATH;
         data_path_ += "/slam_data";
         if(boost::filesystem::is_directory(data_path_))
@@ -64,7 +64,7 @@ namespace mylocalization{
                                     const YAML::Node &config_node){
         std::string registration_method = config_node["registration_method"].as<std::string>();
         if(registration_method == "NDT")
-            registration_ptr = std::shared_ptr<NDTRegistration>(config_node[registration_method]);
+            registration_ptr = std::make_shared<NDTRegistration>(config_node[registration_method]);
         else{
             LOG(ERROR) << "can't find " << registration_method;
             return false;
@@ -73,14 +73,14 @@ namespace mylocalization{
     }
 
 bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface> &filter_ptr,
-                          YAML::Node &config_node) {
+                          const YAML::Node &config_node) {
         std::string filter_name = config_node[filter_user + "_filter"].as<std::string>();
-        LOF(INFO) << "Filter method: " << filter_name;
+        LOG(INFO) << "Filter method: " << filter_name;
         if(filter_name == "voxel_filter"){
             filter_ptr = std::make_shared<VoxelFilter>(config_node[filter_name][filter_user]);
         }
         else{
-            LOG(ERROR) << "Can't find " << filter_name << "method！"
+            LOG(ERROR) << "Can't find " << filter_name << "method！";
             return false;
         }
         return true;
@@ -91,18 +91,18 @@ bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
         pcl::io::savePCDFileBinary(file_path,*new_key_frame.cloud_data.cloud_ptr);
 
         Frame key_frame = new_key_frame;
-        key_frame.cloud_data.cloud_ptr.reset(*new_key_frame.cloud_data.cloud_ptr);
+        key_frame.cloud_data.cloud_ptr.reset(new CloudData::CLOUD(*new_key_frame.cloud_data.cloud_ptr));
         CloudData::CLOUD_PTR transformed_cloud_ptr(new CloudData::CLOUD());
-        local_map_frames_.push_back(key_frame)
-        while(local_map_frames_.size() > local_frame_nums){
+        local_map_frames_.push_back(key_frame);
+        while(local_map_frames_.size() > static_cast<size_t>(local_frame_nums)){
             local_map_frames_.pop_front();
         }
-        for(int i = 0; i < local_map_frames_.size(); ++i)
+        for(size_t i = 0; i < local_map_frames_.size(); ++i)
         {
             pcl::transformPointCloud(*local_map_frames_.at(i).cloud_data.cloud_ptr,
                                      *transformed_cloud_ptr,
                                      local_map_frames_.at(i).pose);
-            *local_map_ptr_ += transformed_cloud_ptr;
+            *local_map_ptr_ += *transformed_cloud_ptr;
         }
         has_new_local_map_ = true;
 
@@ -110,7 +110,7 @@ bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
             registration_ptr_->SetInputTarget(local_map_ptr_);
         }
         else{
-            CloudData::CLOUD_PTR filtered_local_map_ptr
+            CloudData::CLOUD_PTR filtered_local_map_ptr;
             local_filter_ptr_->Filter(local_map_ptr_,filtered_local_map_ptr);
             registration_ptr_->SetInputTarget(filtered_local_map_ptr);
         }
@@ -123,7 +123,7 @@ bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
     bool FrontEnd::Update(const CloudData &cloud_data, Eigen::Matrix4f &cloud_pose) {
         current_frame_.cloud_data.time = cloud_data.time;
         std::vector<int> indices;
-        pcl::removeNaNFromPointCloud(*cloud_data,*current_frame_.cloud_data,indices);
+        pcl::removeNaNFromPointCloud(*cloud_data.cloud_ptr,*current_frame_.cloud_data.cloud_ptr,indices);
 
         CloudData::CLOUD_PTR filtered_cloud_ptr(new CloudData::CLOUD());
         frame_filter_ptr_->Filter(current_frame_.cloud_data.cloud_ptr,filtered_cloud_ptr);
@@ -143,8 +143,9 @@ bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
         registration_ptr_->ScanMatch(filtered_cloud_ptr,predict_pose,result_map_ptr_,current_frame_.pose);
         cloud_pose = current_frame_.pose;
 
-        step_pose = last_key_frame_pose.inverse() * current_frame_.pose;
+        step_pose = last_pose.inverse() * current_frame_.pose;
         predict_pose = current_frame_.pose * step_pose;
+        last_pose = current_frame_.pose;
 
         if(fabs(last_key_frame_pose(0,3)-current_frame_.pose(0,3))+
         fabs(last_key_frame_pose(1,3)-current_frame_.pose(1,3))+
@@ -159,4 +160,8 @@ bool FrontEnd::InitFilter(std::string filter_user, std::shared_ptr<CloudFilterIn
         init_pose_ = init_pose;
         return true;
     }
+}
+
+int main(){
+
 }

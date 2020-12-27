@@ -9,7 +9,7 @@
 namespace mylocalization{
 class NDTRegistration: public RegistrationInterface{
 public:
-    NDTRegistration(YAML::Node& node);
+    NDTRegistration(const YAML::Node& node);
     NDTRegistration(float res, float step_size, float trans_eps, int max_iter);
     bool SetInputTarget(const CloudData::CLOUD_PTR& input_source) override;
     bool ScanMatch(

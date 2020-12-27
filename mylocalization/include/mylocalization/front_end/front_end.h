@@ -27,9 +27,9 @@ namespace mylocalization{
 
     private:
         bool InitParam(const YAML::Node& config_node);
-        bool InitDataPath(YAML::Node& config_node);
+        bool InitDataPath(const YAML::Node& config_node);
         bool InitRegistration(std::shared_ptr<RegistrationInterface>& registration_ptr, const YAML::Node& config_node);
-        bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, YAML::Node& config_node);
+        bool InitFilter(std::string filter_user, std::shared_ptr<CloudFilterInterface>& filter_ptr, const YAML::Node& config_node);
         bool UpdateWithNewFrame(const Frame& new_key_frame);
 
         std::string data_path_ = "";

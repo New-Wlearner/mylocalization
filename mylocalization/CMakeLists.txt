@@ -34,5 +34,6 @@ file(GLOB_RECURSE NODE_SRCS "src/*_node.cpp")
 file(GLOB_RECURSE THIRD_PART_SRCS "third_party/*.cpp")
 list(REMOVE_ITEM ALL_SRCS ${THIRD_PART_SRCS} ${NODE_SRCS})
 
+
 add_executable(test_frame_node ${ALL_SRCS})
 target_link_libraries(test_frame_node ${catkin_LIBRARIES} ${ALL_TARGET_LIBRARIES})
